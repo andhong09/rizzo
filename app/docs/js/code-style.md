@@ -193,7 +193,7 @@ let { name, age, location } = this.user;
 ```
 
 ### Arrow functions
-* Use arrow functions possible
+* Arrow functions should be used by default, except in rare cases where it's not possible
 
 ```javascript
 let componentState = {
