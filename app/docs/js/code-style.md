@@ -114,7 +114,7 @@ thing == null
 ### Chaining
 When using a function that chains (particularly, but not only limited to jQuery), the following style should be used...
 
-```js
+```javascript
 $(selector)
   .methodA()
   .find("some-other-thing")
@@ -157,10 +157,11 @@ require([
 * Use `let` almost always, and declare in correct scope. No more need to hoist all declarations
 
 * Use `const` when needing a **primitive** value (aka string, number, boolean) to never change
+* You can use `const` on objects and array's too, just keep in mind you can still change properties on objects, and call `push`, `pop`, `etc` on arrays
 
 * Use `var` only in legacy code
 
-```js
+```javascript
 function StacksComponent() {
   // Height never changes
   const height = 100;
@@ -181,7 +182,7 @@ function StacksComponent() {
 ### Destructuring
 * Rather than setting individual variables off of an object, utilize destructuring
 
-```js
+```javascript
 // bad
 let name = this.user.name,
     age = this.user.age,
@@ -194,7 +195,7 @@ let { name, age, location } = this.user;
 ### Arrow functions
 * Use arrow functions possible
 
-```js
+```javascript
 let componentState = {
   setInitialState: (initial) => {
 
@@ -204,7 +205,7 @@ let componentState = {
 
 * Use implicit return and no curly braces for simple statements
 
-```js
+```javascript
 let state = {};
 
 let componentState = {
@@ -216,7 +217,7 @@ let componentState = {
 ### Classes
 * Utilize ES2015 `class` now instead of simply using functions
 
-```js
+```javascript
 // bad
 function StacksComponent() {
 
@@ -228,7 +229,7 @@ class StacksComponent
 
 * Use `extends` for setting up prototype inheritance
 
-```js
+```javascript
 class StacksComponent extends BaseComponent {
 
 }
@@ -241,7 +242,7 @@ class StacksComponent extends BaseComponent {
 
 * Use the `default` keyword if the intent of the module is to only export one thing
 
-```js
+```javascript
 import BaseComponent from "../core/baseComponent";
 
 class StacksComponent extends BaseComponent {
@@ -253,7 +254,7 @@ export default StacksComponent
 
 * You can export an object such as utilities as well
 
-```js
+```javascript
 // core/utils.js
 import assign from "lodash/object/assign";
 
@@ -275,4 +276,68 @@ import * as utils from "../core/utils"
 utils.foo();
 utils.bar();
 utils.baz();
+```
+
+### Map, and Set
+There are 2 new collection structures available in ES6.
+
+
+* Use the new `Set` object in place of an array or object in the case where you need to prevent duplicate values
+
+```javascript
+let names = new Set(["steve", "eric", "jonathan", "amanda", "joe", "steve"]);
+set.size; // 5
+set.add("eric"); // fail
+set.has("amanda"); // true
+
+for (let name of set.values()) {
+    console.log(name);
+}
+
+// OR
+names.forEach((val1, val2, set) => {
+  val1; // "steve"
+  val2; // "eric"
+});
+```
+
+* Use `Map` when you want to create an object or array with unique keys (the keys don't have to be strings in a Map either)
+
+```javascript
+let state = new Map();
+
+state.set("name": "Component");
+state.set("height", 450);
+state.set(100, "abc"); // Whoa you can totes do that
+state.size; // 3
+
+state.get("name"); // Component
+
+for (let val of set.values()) {
+  console.log(val);
+}
+
+for (let keys of set.values()) {
+  console.log(val);
+}
+
+for (let [key, val] of set.entries()) {
+  console.log(key, val);
+}
+
+state.forEach(function(value, key) {
+  console.log(key, val);
+});
+```
+
+### Array comprehension
+* If an array needs to be created or manipulated from a given set of data, utilize [array comprehension](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Array_comprehensions)
+
+```javascript
+// Rather than...
+
+numbers.map(function (i) { return i * i });
+
+// Use
+[for (i of numbers) i*i]
 ```
